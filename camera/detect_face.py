@@ -21,8 +21,8 @@ while True:
         response = {'faces': []}
         for (x, y, w, h) in faces:
             face = {
-                'x': (x + (w / 2) - 160) / 320,
-                'y': (y + (h / 2) - 120) / 120
+                'x': (x + (w / 2) - 160) / 320.0,
+                'y': (y + (h / 2) - 120) / 120.0
             }
             response['faces'].append(face)
         print json.dumps(response)
