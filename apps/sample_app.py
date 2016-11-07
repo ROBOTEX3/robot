@@ -1,4 +1,4 @@
-from .. import library.client
+from library import client
 import time
 
 while True:

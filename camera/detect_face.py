@@ -1,8 +1,9 @@
 import cv2
 import json
+import os
 
 capture = cv2.VideoCapture(0)
-faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
+faceCascade = cv2.CascadeClassifier(os.path.dirname(__file__) + '/haarcascade_frontalface_alt.xml')
 
 while True:
     command = raw_input()
