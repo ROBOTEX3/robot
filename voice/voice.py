@@ -1,4 +1,5 @@
 import socket, re
+import pygame.mixer
 
 def catchSent(clientsock):
     flag=False
@@ -28,9 +29,35 @@ def analyze(sent):
         move = "go"
     elif ("balse" in sent):
         move = "quit"
+    elif ("こんにちは"):
+        move = "greeting"
+        hoge = pygame.mixer.Sound("こんにちは.WAV")
+        hoge.play()
+    elif ("こんばんは"):
+        move = "greeting"
+        hoge = pygame.mixer.Sound("こんばんは.WAV")
+        hoge.play()
+    elif ("おやすみ"):
+        move = "greeting"
+        hoge = pygame.mixer.Sound("おやすみ.WAV")
+        hoge.play()
+    elif ("はじめまして"):
+        move = "greeting"
+        hoge = pygame.mixer.Sound("はじめまして.WAV")
+        hoge.play()
+    elif ("久しぶり"):
+        move = "greeting"
+        hoge = pygame.mixer.Sound("ひさしぶり.WAV")
+        hoge.play()
     else:
         move = "other"
+        hoge = pygame.mixer.Sound("もう一回.WAV")
     return(move)
+
+Host = 'localhost'
+Port = 10500 # Julius のポート番号
+clientsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+clientsock.connect((Host, Port)) 
 
 while True:
     command = raw_input()
