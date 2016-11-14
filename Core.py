@@ -27,7 +27,7 @@ proc_motor = subprocess.Popen(
     stdout = subprocess.PIPE
 )
 
-proc_distant = subprocess.Popen(
+proc_sensor = subprocess.Popen(
     ['./sensor/distant'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
@@ -59,27 +59,31 @@ def func_motor(request):
     elif cmd == 'move' or cmd == 'back':
         right_speed = request['right_speed']
         left_speed = request['left_speed']
-        log.communication('motor: send' + cmd + ' ' + right_speed + ' ' + left_speed)
-        proc_motor.stdin.write(cmd + ' ' + right_speed + ' ' + left_speed + '\n')
+        right = str(right_speed)
+        left = str(left_speed)
+        log.communication('motor: send' + cmd + ' ' + right + ' ' + left)
+        proc_motor.stdin.write(cmd + ' ' + right + ' ' + left + '\n')
     elif cmd == 'right' or cmd == 'left':
         speed = request['speed']
-        log.communication('motor: send' + cmd + ' ' + speed)
-        proc_motor.stdin.write(cmd + ' ' + speed + '\n')
+        log.communication('motor: send' + cmd + ' ' + str(speed))
+        proc_motor.stdin.write(cmd + ' ' + str(speed) + '\n')
 
 def func_sensor(request):
     cmd = request['command']
     log.communication('sensor: send' + cmd)
     if cmd == 'check':
-        response = proc_sensor.stdin.write(cmd + '\n')
+        proc_sensor.stdin.write(cmd + '\n')
+        response = proc_sensor.stdout.readline()
     log.communication('sensor: receive ' + response)
     return response
 
 while True:
     #get module and command from app
     raw_request = proc_app.stdout.readline()
+    print raw_request
     log.communication('app: receive ' + raw_request)
     request = json.loads(raw_request)
-    respnose = ''
+    response = ''
     if request['module'] == 'camera':
         response = func_camera(request)
     elif request['module'] == 'voice':
@@ -88,5 +92,7 @@ while True:
         func_motor(request)
     elif request['module'] == 'sensor':
         response = func_sensor(request)
+    print response
     log.communication('app: send ' + response)
-    proc_app.stdin.write(response)
+    if response != '':
+        proc_app.stdin.write(response)

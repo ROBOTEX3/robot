@@ -6,7 +6,7 @@ def get_face_positions():
         'command': 'face_positions'
     }
     print json.dumps(request)
-    return raw_input()
+    return json.loads(raw_input())
 
 def move(right_speed, left_speed):
     request = {
@@ -55,7 +55,7 @@ def recongize_voice():
         'command': 'recognize'
     }
     print json.dumps(request)
-    return raw_input()
+    return json.loads(raw_input())
 
 def get_distant():
     request = {
@@ -63,4 +63,4 @@ def get_distant():
         'command': 'check'
     }
     print json.dumps(request)
-    return raw_input()
+    return json.loads(raw_input())
