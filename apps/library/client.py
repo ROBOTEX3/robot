@@ -8,10 +8,12 @@ def get_face_positions():
     print json.dumps(request)
     return raw_input()
 
-def move():
+def move(right_speed, left_speed):
     request = {
         'module': 'motor',
-        'command': 'move'
+        'command': 'move',
+        'right_speed': right_speed,
+        'left_speed': left_speed
     }
     print json.dumps(request)
 
@@ -22,10 +24,28 @@ def stop():
     }
     print json.dumps(request)
 
-def back():
+def back(right_speed, left_speed):
     request = {
         'module': 'motor',
-        'command': 'stop'
+        'command': 'stop',
+        'right_speed': right_speed,
+        'left_speed': left_speed
+    }
+    print json.dumps(request)
+
+def right(speed):
+    request = {
+        'module': 'motor',
+        'command': 'right',
+        'speed': speed
+    }
+    print json.dumps(request)
+
+def left(speed):
+    request = {
+        'module': 'motor',
+        'command': 'left',
+        'speed': speed
     }
     print json.dumps(request)
 
@@ -33,6 +53,14 @@ def recongize_voice():
     request = {
         'module': 'voice',
         'command': 'recognize'
+    }
+    print json.dumps(request)
+    return raw_input()
+
+def get_distant():
+    request = {
+        'module': 'sensor',
+        'command': 'check'
     }
     print json.dumps(request)
     return raw_input()

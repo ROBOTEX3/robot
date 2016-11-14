@@ -2,8 +2,8 @@ from library import client
 import time
 
 while True:
-    f = open('output', 'a')
-    f.write(client.get_face_positions())
-    f.close()
-    time.sleep(2)
+    client.move(100, 100)
+    distant = client.get_distant()
+    if distant['right'] < 40 or distant['left'] < 40:
+        client.stop()
 
