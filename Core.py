@@ -15,7 +15,7 @@ proc_camera = subprocess.Popen(
     stdout = subprocess.PIPE
 )
 
-proc_void = subprocess.Popen(
+proc_voice = subprocess.Popen(
     ['python', '-u', './voice/voice.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE

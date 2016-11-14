@@ -34,4 +34,5 @@ def recongize_voice():
         'module': 'voice',
         'command': 'recognize'
     }
-
+    print json.dumps(request)
+    return raw_input()
