@@ -14,7 +14,6 @@ def move():
         'command': 'move'
     }
     print json.dumps(request)
-    return raw_input()
 
 def stop():
     request = {
@@ -22,4 +21,17 @@ def stop():
         'command': 'stop'
     }
     print json.dumps(request)
-    return raw_input()
+
+def back():
+    request = {
+        'module': 'motor',
+        'command': 'stop'
+    }
+    print json.dumps(request)
+
+def recongize_voice():
+    request = {
+        'module': 'voice',
+        'command': 'recognize'
+    }
+
