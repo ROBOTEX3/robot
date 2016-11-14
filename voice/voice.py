@@ -52,6 +52,7 @@ def analyze(sent):
     else:
         move = "other"
         hoge = pygame.mixer.Sound("もう一回.WAV")
+        hoge.play()
     return(move)
 
 Host = 'localhost'
