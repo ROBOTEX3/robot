@@ -1,12 +1,30 @@
 import json
+import threading
 
-def get_face_positions():
+listeners = {'camera': [], 'sensor': []}
+
+class ListenerThread(threading.Thread):
+    def __init__(self):
+        super(ListenerThread, self).__init__()
+    def run(self):
+        while True:
+            data = json.loads(raw_input())
+            request = data['request']
+            response = data['response']
+            module = request['module']
+            listeners[module][0](response)
+            listeners[module].pop(0)
+
+thread = ListenerThread()
+thread.start()
+
+def get_face_positions(callback):
     request = {
         'module': 'camera',
         'command': 'face_positions'
     }
     print json.dumps(request)
-    return json.loads(raw_input())
+    listeners['camera'].append(callback)
 
 def move(right_speed, left_speed):
     request = {
@@ -57,13 +75,13 @@ def recongize_voice():
     print json.dumps(request)
     return json.loads(raw_input())
 
-def get_distant():
+def get_distant(callback):
     request = {
         'module': 'sensor',
         'command': 'check'
     }
     print json.dumps(request)
-    return json.loads(raw_input())
+    listeners['sensor'].append(callback)
 
 def speak(msg):
     request = {
