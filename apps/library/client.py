@@ -64,3 +64,11 @@ def get_distant():
     }
     print json.dumps(request)
     return json.loads(raw_input())
+
+def speak(msg):
+    request = {
+        'module': 'speech',
+        'command': 'speak',
+        'message': msg
+    }
+    print json.dumps(request)

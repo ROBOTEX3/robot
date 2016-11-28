@@ -1,4 +1,5 @@
 import cv2
+import cv2.cv as cv
 import json
 import os
 
@@ -16,7 +17,7 @@ while True:
             scaleFactor=1.1,
             minNeighbors=3,
             minSize=(30, 30),
-            flags=cv2.CASCADE_SCALE_IMAGE
+            flags=cv.CV_HAAR_SCALE_IMAGE
         )
         response = {'faces': []}
         for (x, y, w, h) in faces:
