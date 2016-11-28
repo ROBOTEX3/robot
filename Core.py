@@ -105,7 +105,6 @@ def func_speech(request):
 while True:
     #get module and command from app
     raw_request = proc_app.stdout.readline()
-    print raw_request
     log.communication('app: receive ' + raw_request)
     request = json.loads(raw_request)
     if request['module'] == 'camera':

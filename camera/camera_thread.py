@@ -16,6 +16,5 @@ class CameraThread(threading.Thread):
             self.camera.stdin.write(cmd + '\n')
             response = self.camera.stdout.readline()
         self.log.communication('camera: receive ' + response)
-        print response
         response = json.loads(response)
         self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')

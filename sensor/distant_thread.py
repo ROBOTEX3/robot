@@ -16,6 +16,5 @@ class DistantThread(threading.Thread):
             self.distant.stdin.write(cmd + '\n')
             response = self.distant.stdout.readline()
         self.log.communication('distant: receive ' + response)
-        print response
         response = json.loads(response)
         self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')

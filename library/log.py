@@ -14,6 +14,7 @@ def save_log(level, message):
     log = '[' + level + ']'
     log = log + '[' + get_time() + ']'
     log = log + ' ' + message + '\n'
+    print log
     f.write(log)
 
 def close():
