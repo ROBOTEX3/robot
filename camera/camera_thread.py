@@ -1,4 +1,5 @@
 import threading
+import json
 
 class CameraThread(threading.Thread):
     def __init__(self, request, log, app, camera):
@@ -17,4 +18,4 @@ class CameraThread(threading.Thread):
         self.log.communication('camera: receive ' + response)
         print response
         response = json.loads(response)
-        self.app.stdin.write(json.dumps({"response":response, 'request':request}))
+        self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')

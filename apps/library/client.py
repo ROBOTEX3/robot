@@ -1,22 +1,19 @@
 import json
-import threading
 
-listeners = {'camera': [], 'sensor': []}
+listeners = {
+    'camera': [],
+    'sensor': []
+}
 
-class ListenerThread(threading.Thread):
-    def __init__(self):
-        super(ListenerThread, self).__init__()
-    def run(self):
-        while True:
-            data = json.loads(raw_input())
-            request = data['request']
-            response = data['response']
-            module = request['module']
-            listeners[module][0](response)
-            listeners[module].pop(0)
-
-thread = ListenerThread()
-thread.start()
+def startListener(thread):
+    thread.start()
+    while True:
+        data = json.loads(raw_input())
+        request = data['request']
+        response = data['response']
+        module = request['module']
+        listeners[module][0](response)
+        listeners[module].pop(0)
 
 def get_face_positions(callback):
     request = {

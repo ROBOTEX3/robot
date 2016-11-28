@@ -1,9 +1,13 @@
 import subprocess
 import time
 import json
+import sys
 from camera import camera_thread
-from camera import distant_thread
+from sensor import distant_thread
 from library import log
+
+argv = sys.argv
+is_test = argv[1] == 'test'
 
 proc_app = subprocess.Popen(
     ['python', '-u', './apps/sample_app.py'],
@@ -11,8 +15,13 @@ proc_app = subprocess.Popen(
     stdout = subprocess.PIPE
 )
 
+
+if is_test:
+    camera_cmd = ['python', '-u', './camera/camera_stub.py']
+else:
+    camera_cmd = ['python', '-u', './camera/camera.py']
 proc_camera = subprocess.Popen(
-    ['python', '-u', './camera/camera.py'],
+    camera_cmd,
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -23,20 +32,32 @@ proc_camera = subprocess.Popen(
 #    stdout = subprocess.PIPE
 #)
 
-#proc_motor = subprocess.Popen(
-#    ['./motor/motor'],
-#    stdin = subprocess.PIPE,
-#    stdout = subprocess.PIPE
-#)
-
-proc_sensor = subprocess.Popen(
-    ['./sensor/distant'],
+if is_test:
+    motor_cmd = ['python', '-u', './simple_stub.py']
+else:
+    motor_cmd = ['./motor/motor']
+proc_motor = subprocess.Popen(
+    motor_cmd,
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
 
+if is_test:
+    distant_cmd = ['python', '-u', './sensor/distant_stub.py']
+else:
+    distant_cmd = ['./sensor/distant']
+proc_sensor = subprocess.Popen(
+    distant_cmd,
+    stdin = subprocess.PIPE,
+    stdout = subprocess.PIPE
+)
+
+if is_test:
+    speech_cmd = ['python', '-u', './simple_stub.py']
+else:
+    speech_cmd = ['python', '-u', './speech/speech.py']
 proc_speech = subprocess.Popen(
-    ['python', '-u', './speech/speech.py'],
+    speech_cmd,
     stdin = subprocess.PIPE
 )
 

@@ -1,4 +1,5 @@
 import threading
+import json
 
 class DistantThread(threading.Thread):
     def __init__(self, request, log, app, distant):
@@ -17,4 +18,4 @@ class DistantThread(threading.Thread):
         self.log.communication('distant: receive ' + response)
         print response
         response = json.loads(response)
-        self.app.stdin.write(json.dumps({"response":response, 'request':request}))
+        self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')
