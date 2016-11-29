@@ -1,5 +1,10 @@
 import requests
 import json
+import sys
+
+argv = sys.argv
+
+url = argv[1]
 
 while True:
     input = raw_input()
@@ -8,8 +13,8 @@ while True:
     if cmd == 'move':
         right = request[1]
         left = request[2]
-        requests.post('http://localhost:3000/motor/move', params={
+        requests.post(url + '/motor/move', params={
             'right': right, 'left': left
         })
     elif cmd == 'stop':
-        requests.post('http://localhost:3000/motor/stop')
+        requests.post(url + '/motor/stop')

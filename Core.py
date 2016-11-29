@@ -9,6 +9,8 @@ from library import log
 argv = sys.argv
 is_test = argv[1] == 'test'
 
+url = 'http://localhost:3000'
+
 proc_app = subprocess.Popen(
     ['python', '-u', './apps/sample_app.py'],
     stdin = subprocess.PIPE,
@@ -17,7 +19,7 @@ proc_app = subprocess.Popen(
 
 
 if is_test:
-    camera_cmd = ['python', '-u', './camera/camera_stub.py']
+    camera_cmd = ['python', '-u', './camera/camera_stub.py', url]
 else:
     camera_cmd = ['python', '-u', './camera/camera.py']
 proc_camera = subprocess.Popen(
@@ -33,7 +35,7 @@ proc_camera = subprocess.Popen(
 #)
 
 if is_test:
-    motor_cmd = ['python', '-u', './motor/motor_stub.py']
+    motor_cmd = ['python', '-u', './motor/motor_stub.py', url]
 else:
     motor_cmd = ['./motor/motor']
 proc_motor = subprocess.Popen(
@@ -43,7 +45,7 @@ proc_motor = subprocess.Popen(
 )
 
 if is_test:
-    distant_cmd = ['python', '-u', './sensor/distant_stub.py']
+    distant_cmd = ['python', '-u', './sensor/distant_stub.py', url]
 else:
     distant_cmd = ['./sensor/distant']
 proc_sensor = subprocess.Popen(
