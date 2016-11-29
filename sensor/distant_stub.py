@@ -1,7 +1,9 @@
 import json
 import time
+import requests
 
 while True:
-    raw_input()
+    input = raw_input()
+    r = requests.post('http://localhost:3000/sensor/distant')
     time.sleep(1)
-    print json.dumps({'right': 100, 'left': 100})
+    print r.text

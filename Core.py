@@ -33,7 +33,7 @@ proc_camera = subprocess.Popen(
 #)
 
 if is_test:
-    motor_cmd = ['python', '-u', './simple_stub.py']
+    motor_cmd = ['python', '-u', './motor/motor_stub.py']
 else:
     motor_cmd = ['./motor/motor']
 proc_motor = subprocess.Popen(
