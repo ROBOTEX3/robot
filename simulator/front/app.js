@@ -1,4 +1,6 @@
 const io = require('socket.io-client')
+const obstacles = require('./obstacles')
+const sensor = require('./sensor')
 
 const socket = io()
 
@@ -29,7 +31,8 @@ socket.on('camera:face_detection', (msg) => {
 
 socket.on('sensor:distant', (msg) => {
     console.log('distant')
-    socket.emit('sensor:response', {right: 100 - status.x, left: 100})
+    const distance = sensor(status, obstacles)
+    socket.emit('sensor:response', {right: distance, left: distance})
 })
 
 const canvas = document.getElementById('canvas')
@@ -37,14 +40,24 @@ const ctx = canvas.getContext('2d')
 const draw = (status) => {
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, 600, 400);
-    ctx.strokeRect(400, 150, 20, 20)
     drawRobot(status)
+    drawObstacles(status, obstacles)
 }
 const drawRobot = (status) => {
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.translate(300 + status.x, 200 + status.y)
     ctx.rotate(status.rotate)
     ctx.strokeRect(-10, -5, 20, 10)
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+}
+const drawObstacles = (status, obstacles) => {
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.translate(300, 200)
+    for (obstacle of obstacles) {
+        const w = obstacle.w
+        const h = obstacle.h
+        ctx.strokeRect(obstacle.x - w / 2, obstacle.y - h / 2, w, h)
+    }
     ctx.setTransform(1, 0, 0, 1, 0, 0)
 }
 
