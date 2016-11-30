@@ -14,8 +14,8 @@ var status = {
 
 socket.on('motor:move', (msg) => {
     console.log(msg)
-    status.right_speed = msg.right - 30
-    status.left_speed = msg.left
+    status.right_speed = parseInt(msg.right)
+    status.left_speed = parseInt(msg.left)
 })
 
 socket.on('motor:stop', (msg) => {
@@ -62,9 +62,10 @@ const drawObstacles = (status, obstacles) => {
 }
 
 setInterval(() => {
-    status.x += Math.cos(status.rotate) * (status.right_speed / 100)
-    status.y += Math.sin(status.rotate) * (status.left_speed / 100)
-    status.rotate += Math.PI * (status.right_speed - status.left_speed) / 100 / 180
+    const speed = (status.right_speed + status.left_speed) / 300
+    status.rotate += Math.PI * (status.right_speed - status.left_speed) / 18000
+    status.x += Math.cos(status.rotate) * speed
+    status.y += Math.sin(status.rotate) * speed
     var span = document.getElementById('text')
     span.innerHTML = JSON.stringify(status)
     draw(status)

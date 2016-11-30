@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
 app.use(express.static('public'));
 
 app.post('/motor/move', (req, res, next) => {
-    console.log('motor/move ' + req.query)
+    console.log('motor/move ' + JSON.stringify(req.query))
     io.emit('motor:move', req.query)
     res.send('')
 })

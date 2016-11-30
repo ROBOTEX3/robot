@@ -14,7 +14,7 @@ while True:
         right = request[1]
         left = request[2]
         requests.post(url + '/motor/move', params={
-            'right': right, 'left': left
+            'right': int(right), 'left': int(left)
         })
     elif cmd == 'stop':
         requests.post(url + '/motor/stop')

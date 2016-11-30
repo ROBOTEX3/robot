@@ -2,11 +2,18 @@ from library import client
 import time
 import threading
 
+status = {'step': 'move'}
+
 def distant_listener(request):
     if request['right'] < 40 or request['left'] < 40:
-        client.speak("stopping")
-        client.stop()
+        if status['step'] == 'move':
+            client.speak("stopping")
+            client.stop()
+            status['step'] = 'stop'
+        else:
+            client.move(50, -50)
     else:
+        status['step'] = 'move'
         client.move(100, 100)
     client.get_distant(distant_listener)
 
