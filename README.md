@@ -20,7 +20,7 @@ Here is the available modules.
 When you implement your app, you can use `app/library/client.py`　for process communication with the above modules.
 
 ## Simulator
-Finally, we can made perfect simulator which can execute applications.
+Finally, we made perfect simulator which can execute applications.
 
 ### Available modules
 - distance sensor
