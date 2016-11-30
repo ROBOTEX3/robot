@@ -20,7 +20,13 @@ Here is the available modules.
 When you implement your app, you can use `app/library/client.py`　for process communication with the above modules.
 
 ## Simulator
-Finally, we can make perfect simulator which can execute applications.
+Finally, we can made perfect simulator which can execute applications.
+
+### Available modules
+- distance sensor
+- motor
+
+Don't worry about any errors if you use other modules because they will be just mocked.
 
 ### Install
 You have to install Node.js before executing following codes.
