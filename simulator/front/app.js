@@ -31,8 +31,9 @@ socket.on('camera:face_detection', (msg) => {
 
 socket.on('sensor:distant', (msg) => {
     console.log('distant')
-    const distance = sensor(status, obstacles)
-    socket.emit('sensor:response', {right: distance, left: distance})
+    const distances = sensor(status, obstacles)
+    console.log(distances)
+    socket.emit('sensor:response', {right: distances[0], left: distances[1]})
 })
 
 const canvas = document.getElementById('canvas')
