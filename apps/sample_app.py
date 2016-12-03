@@ -7,13 +7,10 @@ def distant_listener(request):
     left = request['left']
     if right < 100 or left < 100:
         if right != left:
-            if right / left > 2:
-                turn = -(100 - left) / 5
-            elif left / right > 2:
-                turn = (100 - right) / 5
+            if right > left:
+                client.move(int(left), 100)
             else:
-                turn = (right - left) * (200 - right - left) / 10
-            client.move(int(100 + turn), int(100 - turn))
+                client.move(100, int(right))
         else:
             client.move(100, 80)
     else:
