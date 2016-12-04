@@ -1,6 +1,8 @@
 const io = require('socket.io-client')
 const obstacles = require('./obstacles')
 const sensor = require('./sensor')
+const faces = require('./faces')
+const face_detection = require('./face_detection')
 
 const socket = io()
 
@@ -26,7 +28,8 @@ socket.on('motor:stop', (msg) => {
 
 socket.on('camera:face_detection', (msg) => {
     console.log('face_detection')
-    socket.emit('camera:response', {faces: []})
+    const result = face_detection(status, faces, ctx)
+    socket.emit('camera:response', {faces: result})
 })
 
 socket.on('sensor:distant', (msg) => {
@@ -42,6 +45,7 @@ const draw = (status) => {
     ctx.clearRect(0, 0, 600, 400);
     drawRobot(status)
     drawObstacles(status, obstacles)
+    drawFaces(status, faces)
 }
 const drawRobot = (status) => {
     ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -57,6 +61,16 @@ const drawObstacles = (status, obstacles) => {
         const w = obstacle.w
         const h = obstacle.h
         ctx.strokeRect(obstacle.x - w / 2, obstacle.y - h / 2, w, h)
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+}
+const drawFaces = (status, faces) => {
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.translate(300, 200)
+    for (face of faces) {
+        ctx.beginPath()
+        ctx.arc(face.x, face.y, 5, 0, Math.PI * 2, true)
+        ctx.stroke()
     }
     ctx.setTransform(1, 0, 0, 1, 0, 0)
 }
