@@ -17,9 +17,10 @@ module.exports = (status, faces, ctx) => {
         const z3 = (v1.x - v3.x) * (face.y - v3.y) - (v1.y - v3.y) * (face.x - v3.x)
         if (z1 < 0 && z2 < 0 && z3 < 0) {
             const dir = Math.tan(face.y / face.x) - angle
+            const distance = Math.sqrt(Math.pow(face.x - v1.x, 2) + Math.pow(face.y - v1.y, 2))
             positions.push({
                 x: dir / (Math.PI / 6),
-                y: 0.0
+                y: 1 - distance / 40
             })
         }
     }

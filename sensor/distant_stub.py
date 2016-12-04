@@ -10,4 +10,5 @@ url = argv[1]
 while True:
     input = raw_input()
     r = requests.post(url + '/sensor/distant')
+    time.sleep(0.1)
     print r.text

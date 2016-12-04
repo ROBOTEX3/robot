@@ -22,7 +22,6 @@ def camera_listener(request):
         client.speak('found')
     client.get_face_positions(camera_listener)
 
-
 class MainThread(threading.Thread):
     def __init__(self):
        super(MainThread, self).__init__()
