@@ -38,6 +38,11 @@ socket.on('sensor:distant', (msg) => {
     socket.emit('sensor:response', {right: distances[0], left: distances[1]})
 })
 
+socket.on('voice', (msg) => {
+    console.log('voice')
+    socket.emit('voice:response', 'hello')
+})
+
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 const draw = (status) => {

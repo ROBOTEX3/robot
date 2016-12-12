@@ -19,6 +19,10 @@ io.on('connection', (socket) => {
         console.log(msg)
         sensorResponse.send(JSON.stringify(msg))
     })
+    socket.on('voice:response', (msg) => {
+        console.log(msg)
+        voiceResponse.send(msg)
+    })
 })
 
 app.use(express.static('public'));
@@ -47,4 +51,11 @@ app.post('/sensor/distant', (req, res, next) => {
     console.log('sensor/distant')
     io.emit('sensor:distant', {})
     sensorResponse = res
+})
+
+var voiceResponse = null
+app.post('/voice', (req, res, next) => {
+    console.log('voice')
+    io.emit('voice', {})
+    voiceResponse = res
 })

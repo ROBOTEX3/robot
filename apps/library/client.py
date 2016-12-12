@@ -2,7 +2,8 @@ import json
 
 listeners = {
     'camera': [],
-    'sensor': []
+    'sensor': [],
+    'voice': []
 }
 
 def startListener(thread):
@@ -79,6 +80,9 @@ def get_distant(callback):
     }
     print json.dumps(request)
     listeners['sensor'].append(callback)
+
+def get_voice(callback):
+    listeners['voice'].append(callback)
 
 def speak(msg):
     request = {

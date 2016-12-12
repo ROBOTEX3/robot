@@ -4,6 +4,7 @@ import json
 import sys
 from camera import camera_thread
 from sensor import distant_thread
+from voice import voice_thread
 from library import log
 
 argv = sys.argv
@@ -12,7 +13,7 @@ is_test = argv[1] == 'test'
 url = 'http://localhost:3000'
 
 proc_app = subprocess.Popen(
-    ['python', '-u', './apps/sample_app.py'],
+    ['python', '-u', './apps/sample_voice.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -28,11 +29,15 @@ proc_camera = subprocess.Popen(
     stdout = subprocess.PIPE
 )
 
-#proc_voice = subprocess.Popen(
-#    ['python', '-u', './voice/voice.py'],
-#    stdin = subprocess.PIPE,
-#    stdout = subprocess.PIPE
-#)
+if is_test:
+    voice_cmd = ['python', '-u', './voice/voice_stub.py', url]
+else:
+    voice_cmd = ['python', '-u', './voice/connection.py']
+proc_voice = subprocess.Popen(
+    voice_cmd,
+    stdin = subprocess.PIPE,
+    stdout = subprocess.PIPE
+)
 
 if is_test:
     motor_cmd = ['python', '-u', './motor/motor_stub.py', url]
@@ -67,14 +72,9 @@ def func_camera(request):
     thread = camera_thread.CameraThread(request, log, proc_app, proc_camera)
     thread.start()
 
-def func_voice(request):
-    cmd = request['cmd']
-    log.communication('voice: send ' + cmd)
-    if cmd == 'recognize':
-        proc_voice.stdin.write(cmd + '\n')
-        response = proc_voice.stdout.readline()
-    log.communication('voice: receive ' + response)
-    return response
+def func_voice():
+    thread = voice_thread.VoiceThread(log, proc_app, proc_voice)
+    thread.start()
 
 def func_motor(request):
     cmd = request['command']
@@ -103,6 +103,9 @@ def func_speech(request):
         msg = request['message']
         log.communication('speech: send ' + msg)
         proc_speech.stdin.write(msg + '\n')
+
+# start voice thread
+func_voice()
 
 while True:
     #get module and command from app
