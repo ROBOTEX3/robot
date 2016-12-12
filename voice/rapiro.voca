@@ -1,0 +1,111 @@
+%SONOTA	
+えー	e:
+えーと	e: t o
+えーっと	e: q t o
+えーっとー	e: q t o:
+あー	a:
+あーと	a: t o
+あーっと	a: q t o
+んー	 N N
+んーと	 N N t o
+んーっと	 N N q t o
+あのー	a n o:
+そのー	s o n o:
+と	t o
+っと	q t o
+うーん	u: N
+うーんと	u: N t o
+
+
+%NOISE	
+NS	sp
+	
+%B	
+silB	silB
+	
+%E	
+silE	silE
+
+%HOUKOU
+front	m a e n i
+front	m a e
+front	m a e e
+back	u sh i r o n i
+back	u sh i r o
+back	u sh i r o e
+back	b a q k u
+right	m i g i n i
+right	m i g i
+left	h i d a r i n i
+left	h i d a r i
+
+%HUKUSI
+もう	m o u
+もう	m o:
+
+%KAZU
+一	i ch i
+一	i q
+二	n i
+二	n i:
+三	s a N
+四	y o N
+五	g o
+五	g o:
+六	r o k u
+六	r o q
+七	n a n a
+七	sh i ch i
+七	h i ch i
+八	h a ch i
+八	h a q
+九	ky u:
+九	k u
+十	j u:
+十	j u q
+二十	n i j u:
+二十	n i j u q
+三十	s a N j u:
+三十	s a N j u q
+四十	y o N j u:
+四十	y o N j u q
+五十	g o j u:
+五十	g o j u q
+
+%ZYOSUSI
+ほ	p o
+ほ	h o
+
+%UGOKI
+go	s u s u m e
+go	s u s u m u
+go	i k e
+go	i k u
+go	g o:
+turn	m a w a r e
+turn	m a w a r u
+turn	m a g a r e
+turn	m a g a r u
+
+%UGOKI2
+stop	t o m a r e
+stop	t o m a r u
+stop	s u t o q p u
+
+%DRINK
+otya	o ty a
+
+%CHOTTO
+ちょっと	ch o q t o
+もっと		m o q t o
+ちょっと	ch o i
+
+%AISATSU
+Hello	k o N n i ch i w a
+Hello	H a r o:
+Thank-you	a r i g a t o
+Thank-you	a r i g a t o:
+Thank-you	s e N ky u:
+Good-bye	s a y o u n a r a
+Good-bye	s a y o n a r a
+Good-bye	g u q b a i
