@@ -5,6 +5,7 @@ import sys
 from camera import camera_thread
 from sensor import distant_thread
 from voice import voice_thread
+from shoe import shoe_thread
 from library import log
 
 argv = sys.argv
@@ -13,7 +14,7 @@ is_test = argv[1] == 'test'
 url = 'http://localhost:3000'
 
 proc_app = subprocess.Popen(
-    ['python', '-u', './apps/sample_voice.py'],
+    ['python', '-u', './apps/sample_shoe.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -68,12 +69,22 @@ proc_speech = subprocess.Popen(
     stdin = subprocess.PIPE
 )
 
+proc_shoe = subprocess.Popen(
+    ['python', '-u', './shoe/shoe.py'],
+    stdin = subprocess.PIPE,
+    stdout = subprocess.PIPE
+)
+
 def func_camera(request):
     thread = camera_thread.CameraThread(request, log, proc_app, proc_camera)
     thread.start()
 
 def func_voice():
     thread = voice_thread.VoiceThread(log, proc_app, proc_voice)
+    thread.start()
+
+def func_shoe():
+    thread = shoe_thread.ShoeThread(log, proc_app, proc_shoe)
     thread.start()
 
 def func_motor(request):
@@ -106,6 +117,7 @@ def func_speech(request):
 
 # start voice thread
 func_voice()
+func_shoe()
 
 while True:
     #get module and command from app
