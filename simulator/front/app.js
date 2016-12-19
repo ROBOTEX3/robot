@@ -40,7 +40,8 @@ socket.on('sensor:distant', (msg) => {
 
 socket.on('voice', (msg) => {
     console.log('voice')
-    socket.emit('voice:response', 'hello')
+    const cmd = document.getElementById('voice-cmd').value
+    socket.emit('voice:response', cmd)
 })
 
 const canvas = document.getElementById('canvas')

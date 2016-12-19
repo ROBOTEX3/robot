@@ -3,7 +3,8 @@ import json
 listeners = {
     'camera': [],
     'sensor': [],
-    'voice': []
+    'voice': [],
+    'shoe': []
 }
 
 def startListener(thread):
@@ -13,8 +14,9 @@ def startListener(thread):
         request = data['request']
         response = data['response']
         module = request['module']
-        listeners[module][0](response)
-        listeners[module].pop(0)
+        if len(listeners[module]) > 0:
+            listeners[module][0](response)
+            listeners[module].pop(0)
 
 def get_face_positions(callback):
     request = {
@@ -83,6 +85,9 @@ def get_distant(callback):
 
 def get_voice(callback):
     listeners['voice'].append(callback)
+
+def get_shoe(callback):
+    listeners['shoe'].append(callback)
 
 def speak(msg):
     request = {

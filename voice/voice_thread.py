@@ -15,6 +15,6 @@ class VoiceThread(threading.Thread):
             self.app.stdin.write(json.dumps({
                 "response": response,
                 "request": {"module": "voice"}
-            }))
+            }) + '\n')
 
 
