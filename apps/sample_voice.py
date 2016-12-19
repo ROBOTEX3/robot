@@ -3,6 +3,7 @@ import time
 import threading
 
 def voice_listener(request):
+    client.speak(request)
     client.get_voice(voice_listener)
 
 class MainThread(threading.Thread):

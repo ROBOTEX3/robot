@@ -13,7 +13,6 @@ new_list = []
 xml_buff = ""
 in_recoguout = False
 
-print("Start")
 while True:
       data = cStringIO.StringIO(sock.recv(4096))
       line = data.readline()
