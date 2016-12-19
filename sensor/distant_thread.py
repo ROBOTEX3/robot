@@ -18,3 +18,6 @@ class DistantThread(threading.Thread):
         self.log.communication('distant: receive ' + response)
         response = json.loads(response)
         self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')
+
+    def changeApp(self, app):
+        self.app = app

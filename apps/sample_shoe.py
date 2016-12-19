@@ -10,7 +10,7 @@ def shoe_listener(request):
     state = request['state']
     speed = x
     if y < 0:
-        client.move(int(speed * (255 + y) / 255), int(speed))
+        client.move(int(speed * (-y) / 255), int(speed))
     else:
         client.move(int(speed), int(speed * y / 255))
     client.get_shoe(shoe_listener)

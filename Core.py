@@ -13,12 +13,22 @@ is_test = argv[1] == 'test'
 
 url = 'http://localhost:3000'
 
+def changeApp(app):
+    proc_app.terminate()
+    proc_app = subprocess.Popen(
+        ['python', '-u', './apps/' + app],
+        stdin = subprocess.PIPE,
+        stdout = subprocess.PIPE
+    )
+    for thread in threads.values():
+        thread.changeApp(proc_app)
+    return proc_app
+
 proc_app = subprocess.Popen(
-    ['python', '-u', './apps/sample_shoe.py'],
+    ['python', '-u', './apps/app1.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
-
 
 if is_test:
     camera_cmd = ['python', '-u', './camera/camera_stub.py', url]
@@ -75,17 +85,20 @@ proc_shoe = subprocess.Popen(
     stdout = subprocess.PIPE
 )
 
-def func_camera(request):
-    thread = camera_thread.CameraThread(request, log, proc_app, proc_camera)
-    thread.start()
+threads = {}
 
+def func_camera(request):
+    threads['camera'] = camera_thread.CameraThread(request, log, proc_app, proc_camera)
+    threads['camera'].start()
+
+voice_thread = None
 def func_voice():
-    thread = voice_thread.VoiceThread(log, proc_app, proc_voice)
+    thread = voice_thread.VoiceThread(log, proc_app, proc_voice, changeApp)
     thread.start()
 
 def func_shoe():
-    thread = shoe_thread.ShoeThread(log, proc_app, proc_shoe)
-    thread.start()
+    threads['shoe'] = shoe_thread.ShoeThread(log, proc_app, proc_shoe)
+    threads['shoe'].start()
 
 def func_motor(request):
     cmd = request['command']
@@ -105,8 +118,8 @@ def func_motor(request):
         proc_motor.stdin.write(cmd + ' ' + str(speed) + '\n')
 
 def func_sensor(request):
-    thread = distant_thread.DistantThread(request, log, proc_app, proc_sensor)
-    thread.start()
+    threads['sensor'] = distant_thread.DistantThread(request, log, proc_app, proc_sensor)
+    threads['sensor'].start()
 
 def func_speech(request):
     cmd = request['command']

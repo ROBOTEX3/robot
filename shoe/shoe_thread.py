@@ -17,4 +17,5 @@ class ShoeThread(threading.Thread):
                 "request": {"module": "shoe"}
             }) + '\n')
 
-
+    def changeApp(self, app):
+        self.app = app

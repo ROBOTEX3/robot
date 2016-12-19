@@ -18,3 +18,6 @@ class CameraThread(threading.Thread):
         self.log.communication('camera: receive ' + response)
         response = json.loads(response)
         self.app.stdin.write(json.dumps({"response":response, 'request':self.request}) + '\n')
+
+    def changeApp(self, app):
+        self.app = app
