@@ -8,7 +8,10 @@ from voice import voice_thread
 from library import log
 
 argv = sys.argv
-is_test = argv[1] == 'test'
+if len(argv) > 1:
+    is_test = argv[1] == 'test'
+else:
+    is_test = False
 
 url = 'http://localhost:3000'
 
