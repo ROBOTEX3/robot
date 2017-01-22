@@ -1,20 +1,20 @@
 %SONOTA	
-‚¦[	e:
-‚¦[‚Æ	e: t o
-‚¦[‚Á‚Æ	e: q t o
-‚¦[‚Á‚Æ[	e: q t o:
-‚ [	a:
-‚ [‚Æ	a: t o
-‚ [‚Á‚Æ	a: q t o
-‚ñ[	 N N
-‚ñ[‚Æ	 N N t o
-‚ñ[‚Á‚Æ	 N N q t o
-‚ ‚Ì[	a n o:
-‚»‚Ì[	s o n o:
-‚Æ	t o
-‚Á‚Æ	q t o
-‚¤[‚ñ	u: N
-‚¤[‚ñ‚Æ	u: N t o
+ãˆãƒ¼	e:
+ãˆãƒ¼ã¨	e: t o
+ãˆãƒ¼ã£ã¨	e: q t o
+ãˆãƒ¼ã£ã¨ãƒ¼	e: q t o:
+ã‚ãƒ¼	a:
+ã‚ãƒ¼ã¨	a: t o
+ã‚ãƒ¼ã£ã¨	a: q t o
+ã‚“ãƒ¼	 N N
+ã‚“ãƒ¼ã¨	 N N t o
+ã‚“ãƒ¼ã£ã¨	 N N q t o
+ã‚ã®ãƒ¼	a n o:
+ãã®ãƒ¼	s o n o:
+ã¨	t o
+ã£ã¨	q t o
+ã†ãƒ¼ã‚“	u: N
+ã†ãƒ¼ã‚“ã¨	u: N t o
 
 
 %NOISE	
@@ -40,41 +40,41 @@ left	h i d a r i n i
 left	h i d a r i
 
 %HUKUSI
-‚à‚¤	m o u
-‚à‚¤	m o:
+ã‚‚ã†	m o u
+ã‚‚ã†	m o:
 
 %KAZU
-ˆê	i ch i
-ˆê	i q
-“ñ	n i
-“ñ	n i:
-ŽO	s a N
-Žl	y o N
-ŒÜ	g o
-ŒÜ	g o:
-˜Z	r o k u
-˜Z	r o q
-Žµ	n a n a
-Žµ	sh i ch i
-Žµ	h i ch i
-”ª	h a ch i
-”ª	h a q
-‹ã	ky u:
-‹ã	k u
-\	j u:
-\	j u q
-“ñ\	n i j u:
-“ñ\	n i j u q
-ŽO\	s a N j u:
-ŽO\	s a N j u q
-Žl\	y o N j u:
-Žl\	y o N j u q
-ŒÜ\	g o j u:
-ŒÜ\	g o j u q
+ä¸€	i ch i
+ä¸€	i q
+äºŒ	n i
+äºŒ	n i:
+ä¸‰	s a N
+å››	y o N
+äº”	g o
+äº”	g o:
+å…­	r o k u
+å…­	r o q
+ä¸ƒ	n a n a
+ä¸ƒ	sh i ch i
+ä¸ƒ	h i ch i
+å…«	h a ch i
+å…«	h a q
+ä¹	ky u:
+ä¹	k u
+å	j u:
+å	j u q
+äºŒå	n i j u:
+äºŒå	n i j u q
+ä¸‰å	s a N j u:
+ä¸‰å	s a N j u q
+å››å	y o N j u:
+å››å	y o N j u q
+äº”å	g o j u:
+äº”å	g o j u q
 
 %ZYOSUSI
-‚Ù	p o
-‚Ù	h o
+ã»	p o
+ã»	h o
 
 %UGOKI
 go	s u s u m e
@@ -96,9 +96,9 @@ stop	s u t o q p u
 otya	o ty a
 
 %CHOTTO
-‚¿‚å‚Á‚Æ	ch o q t o
-‚à‚Á‚Æ		m o q t o
-‚¿‚å‚Á‚Æ	ch o i
+ã¡ã‚‡ã£ã¨	ch o q t o
+ã‚‚ã£ã¨		m o q t o
+ã¡ã‚‡ã£ã¨	ch o i
 
 %AISATSU
 Hello	k o N n i ch i w a
@@ -113,3 +113,5 @@ switch		k i r i k a e
 app1		a p u r i i ch i
 app2		a p u r i n i
 exit		sh u ry o u
+clean       s o: j i s i t e
+wash        d a q s u i s i t e
