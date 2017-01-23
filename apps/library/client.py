@@ -51,19 +51,19 @@ def back(right_speed, left_speed):
     }
     print json.dumps(request)
 
-def right(speed):
+def right(angle):
     request = {
         'module': 'motor',
         'command': 'right',
-        'speed': speed
+        'angle': angle
     }
     print json.dumps(request)
 
-def left(speed):
+def left(angle):
     request = {
         'module': 'motor',
         'command': 'left',
-        'speed': speed
+        'angle': angle
     }
     print json.dumps(request)
 

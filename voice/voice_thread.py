@@ -38,6 +38,8 @@ class VoiceThread(threading.Thread):
         automata = automaton[0]
         while True:
             response = self.voice.stdout.readline()
+            if response == '':
+                continue
             response = response.replace('\n', '')
             self.log.communication('voice: receive ' + response)
             automata = automaton[automata['next'](response)]

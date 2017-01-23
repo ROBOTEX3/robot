@@ -19,7 +19,7 @@ url = 'http://localhost:3000'
 proc = {}
 
 proc['app'] = subprocess.Popen(
-    ['python', '-u', './apps/sample_shoe.py'],
+    ['python', '-u', './apps/sample_motor_acc.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -67,6 +67,15 @@ else:
     motor_cmd = ['./motor/motor']
 proc['motor'] = subprocess.Popen(
     motor_cmd,
+    stdin = subprocess.PIPE,
+    stdout = subprocess.PIPE
+)
+if is_test:
+    motor_acc_cmd = ['python', '-u', './motor/motor_stub.py', url]
+else:
+    motor_acc_cmd = ['./motor/motor_accurate']
+proc['motor_acc'] = subprocess.Popen(
+    motor_acc_cmd,
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -133,9 +142,9 @@ def func_motor(request):
         log.communication('motor: send ' + cmd + ' ' + right + ' ' + left)
         proc['motor'].stdin.write(cmd + ' ' + right + ' ' + left + '\n')
     elif cmd == 'right' or cmd == 'left':
-        speed = request['speed']
-        log.communication('motor: send ' + cmd + ' ' + str(speed))
-        proc['motor'].stdin.write(cmd + ' ' + str(speed) + '\n')
+        angle = request['angle']
+        log.communication('motor: send ' + cmd + ' ' + str(angle))
+        proc['motor_acc'].stdin.write(cmd + ' ' + str(angle) + '\n')
 
 def func_sensor(request):
     threads['sensor'] = distant_thread.DistantThread(request, log, proc['app'], proc['sensor'])

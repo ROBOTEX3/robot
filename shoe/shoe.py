@@ -1,6 +1,6 @@
 import socket
 
-host = "192.168.10.3"
+host = "192.168.11.10"
 port = 3002
 
 serversock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
