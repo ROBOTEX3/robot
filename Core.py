@@ -19,7 +19,7 @@ url = 'http://localhost:3000'
 proc = {}
 
 proc['app'] = subprocess.Popen(
-    ['python', '-u', './apps/app1.py'],
+    ['python', '-u', './apps/sample_shoe.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )

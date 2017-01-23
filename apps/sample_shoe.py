@@ -8,11 +8,10 @@ def shoe_listener(request):
     x = request['x']
     y = request['y']
     state = request['state']
-    speed = x
-    if y < 0:
-        client.move(int(speed * (-y) / 255), int(speed))
-    else:
-        client.move(int(speed), int(speed * y / 255))
+    if state == 'left-check':
+        client.speak('left')
+    elif state == 'right-check':
+        client.speak('right')
     client.get_shoe(shoe_listener)
 
 class MainThread(threading.Thread):
