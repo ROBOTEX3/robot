@@ -42,6 +42,9 @@ class VoiceThread(threading.Thread):
                 continue
             response = response.replace('\n', '')
             self.log.communication('voice: receive ' + response)
+            if response == 'cancel':
+                automata = automaton[0]
+                continue
             automata = automaton[automata['next'](response)]
             state = automata['state']
             print state
