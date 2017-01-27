@@ -18,3 +18,13 @@ while True:
         })
     elif cmd == 'stop':
         requests.post(url + '/motor/stop')
+    elif cmd == 'left':
+        angle = request[1]
+        requests.post(url + '/motor/move', params={
+            'right': int(angle)*4, 'left': int(angle)*(-4) 
+        })
+    elif cmd == 'right':
+        angle = request[1]
+        requests.post(url + '/motor/move', params={
+            'right': int(angle)*(-4), 'left': int(angle)*4
+        })
