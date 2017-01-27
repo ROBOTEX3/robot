@@ -42,12 +42,12 @@ while True:
         for face in faces:
             faceIds.append(face['faceId'])
             pos = face['faceRectangle']
-            face = {
+            data = {
                 'x': (pos['left'] + (pos['width'] / 2) - 160) / 160.0,
                 'y': (pos['top'] + (pos['height'] / 2) - 120) / 120.0,
                 'name': ''
             }
-            response['faces'][face['faceId']] = face
+            response['faces'][face['faceId']] = data
         if len(faces) > 0:
             res = requests.post(identify_url,
                 headers = identify_headers,
@@ -58,8 +58,9 @@ while True:
             )
             data = json.loads(res.text)
             for result in data:
-                personId = result['candidates'][0]['personId']
-                if personId in personIds:
-                    response['faces'][result['faceId']]['name'] = personIds[personId]
+                if len(result['candidates']) > 0:
+                    personId = result['candidates'][0]['personId']
+                    if personId in personIds:
+                        response['faces'][result['faceId']]['name'] = personIds[personId]
         print json.dumps(response)
 
