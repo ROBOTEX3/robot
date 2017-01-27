@@ -2,29 +2,64 @@ import cv2
 import cv2.cv as cv
 import json
 import os
+import requests
 
 capture = cv2.VideoCapture(0)
-faceCascade = cv2.CascadeClassifier(os.path.dirname(__file__) + '/haarcascade_frontalface_alt.xml')
+
+personIds = {
+    'a27c354a-2c0e-4b38-be6c-b64a2daf6b9e': 'haruki',
+    '57888a6e-06fa-4fa8-b91e-9ebfb4102677': 'masaki',
+    '4796cabc-dcba-4c88-b2c7-5db21a288175': 'yasutaka',
+    '269a1a64-8686-4269-a582-60f2bd664b6b': 'yuma'
+}
+
+detect_headers = {
+    'Content-Type': 'application/octet-stream',
+    'Ocp-Apim-Subscription-Key': '7f898d38a01240078533a69dd4e98d45'
+}
+identify_headers = {
+    'Ocp-Apim-Subscription-Key': '7f898d38a01240078533a69dd4e98d45'
+}
+detect_url = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect'
+identify_url = 'https://westus.api.cognitive.microsoft.com/face/v1.0/identify'
 
 while True:
     command = raw_input()
     if command == 'face_positions':
         _, img = capture.read()
         img = cv2.resize(img, (320, 240))
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = faceCascade.detectMultiScale(
-            gray,
-            scaleFactor=1.1,
-            minNeighbors=3,
-            minSize=(30, 30),
-            flags=cv.CV_HAAR_SCALE_IMAGE
+        cv2.imwrite('tmp.jpg', img)
+        f = open('tmp.jpg', 'rb')
+        binary = f.read()
+        f.close()
+        res = requests.post(detect_url,
+            headers = detect_headers,
+            data = binary
         )
-        response = {'faces': []}
-        for (x, y, w, h) in faces:
+        faces = json.loads(res.text)
+        faceIds = []
+        response = {'faces': {}}
+        for face in faces:
+            faceIds.append(face['faceId'])
+            pos = face['faceRectangle']
             face = {
-                'x': (x + (w / 2) - 160) / 320.0,
-                'y': (y + (h / 2) - 120) / 120.0
+                'x': (pos['left'] + (pos['width'] / 2) - 160) / 160.0,
+                'y': (pos['top'] + (pos['height'] / 2) - 120) / 120.0,
+                'name': ''
             }
-            response['faces'].append(face)
+            response['faces'][face['faceId']] = face
+        if len(faces) > 0:
+            res = requests.post(identify_url,
+                headers = identify_headers,
+                data = json.dumps({
+                    'faceIds': faceIds,
+                    'personGroupId': 'members'
+                })
+            )
+            data = json.loads(res.text)
+            for result in data:
+                personId = result['candidates'][0]['personId']
+                if personId in personIds:
+                    response['faces'][result['faceId']]['name'] = personIds[personId]
         print json.dumps(response)
 
