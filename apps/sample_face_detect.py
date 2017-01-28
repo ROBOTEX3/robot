@@ -12,11 +12,9 @@ def camera_listener(request):
             client.speak(face['name'])
         x = face['x']
         if x > 0:
-            client.move(int(300 * x), 0)
+            client.right(int(30 * x))
         else:
-            client.move(0, int(-300 * x))
-            time.sleep(0.1)
-            client.stop()
+            client.left(int(-30 * x))
     client.get_face_positions(camera_listener)
 
 class MainThread(threading.Thread):

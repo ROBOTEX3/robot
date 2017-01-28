@@ -10,18 +10,19 @@ module.exports = (status, faces, ctx) => {
         y: status.y + Math.sin(angle - Math.PI / 6) * 150
     }
 
-    const positions = []
+    const positions = {}
     for (face of faces) {
         const z1 = (v2.x - v1.x) * (face.y - v1.y) - (v2.y - v1.y) * (face.x - v1.x)
         const z2 = (v3.x - v2.x) * (face.y - v2.y) - (v3.x - v2.x) * (face.x - v2.x)
         const z3 = (v1.x - v3.x) * (face.y - v3.y) - (v1.y - v3.y) * (face.x - v3.x)
-        if (z1 < 0 && z2 < 0 && z3 < 0) {
-            const dir = Math.tan(face.y / face.x) - angle
+        if (z1 <= 0 && z2 <= 0 && z3 <= 0) {
+            const dir = Math.atan(face.y / face.x) - angle
             const distance = Math.sqrt(Math.pow(face.x - v1.x, 2) + Math.pow(face.y - v1.y, 2))
-            positions.push({
+            positions[face.name] = {
                 x: dir / (Math.PI / 6),
-                y: 1 - distance / 40
-            })
+                y: 1 - distance / 40,
+                name: face.name
+            }
         }
     }
     drawSensorArea(v1, v2, v3, ctx)

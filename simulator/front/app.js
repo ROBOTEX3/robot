@@ -77,6 +77,7 @@ const drawFaces = (status, faces) => {
         ctx.beginPath()
         ctx.arc(face.x, face.y, 5, 0, Math.PI * 2, true)
         ctx.stroke()
+        ctx.fillText(face.name, face.x - 15, face.y - 10)
     }
     ctx.setTransform(1, 0, 0, 1, 0, 0)
 }

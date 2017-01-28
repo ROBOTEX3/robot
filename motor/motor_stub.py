@@ -1,6 +1,7 @@
 import requests
 import json
 import sys
+import time
 
 argv = sys.argv
 
@@ -21,10 +22,14 @@ while True:
     elif cmd == 'left':
         angle = request[1]
         requests.post(url + '/motor/move', params={
-            'right': int(angle)*4, 'left': int(angle)*(-4) 
+            'right': int(angle) * -4, 'left': int(angle) * 4 
         })
+        time.sleep(1)
+        requests.post(url + '/motor/stop')
     elif cmd == 'right':
         angle = request[1]
         requests.post(url + '/motor/move', params={
-            'right': int(angle)*(-4), 'left': int(angle)*4
+            'right': int(angle) * 4, 'left': int(angle) * -4
         })
+        time.sleep(1)
+        requests.post(url + '/motor/stop')
