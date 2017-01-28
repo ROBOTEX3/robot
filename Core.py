@@ -19,10 +19,12 @@ url = 'http://localhost:3000'
 proc = {}
 
 proc['app'] = subprocess.Popen(
-    ['python', '-u', './apps/sample_motor_acc.py'],
+    ['python', '-u', './apps/sample_app.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
+
+nullFile = open('/dev/null', 'w')
 
 def changeApp(app):
     proc['app'] = subprocess.Popen(
@@ -40,6 +42,13 @@ def exitCore():
         process.terminate()
     app.terminate()
     sys.exit()
+
+if not is_test:
+    proc['julius'] = subprocess.Popen(
+        ['~/dvd/julius/julius-4.2.3/julius/julius', '-C', 'voice/rapiro.jconf', '-module'],
+        stdout = nullFile,
+        stderr = nullFile
+    )
 
 if is_test:
     camera_cmd = ['python', '-u', './camera/camera_stub.py', url]
@@ -96,7 +105,9 @@ else:
     speech_cmd = ['python', '-u', './speech/speech.py']
 proc['speech'] = subprocess.Popen(
     speech_cmd,
-    stdin = subprocess.PIPE
+    stdin = subprocess.PIPE,
+    stdout = nullFile,
+    stderr = nullFile
 )
 
 if is_test:
