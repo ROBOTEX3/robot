@@ -7,7 +7,6 @@ import sample_chat_long
 
 def main():
      d = sample_chat_short.play()
-     d.play("sentence/01.wav")
      a = random.randint(1, 3)
      if a == 1:
        sample_chat_long.main()
