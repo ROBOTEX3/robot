@@ -235,7 +235,8 @@ def main():
     d = play()
     d.play("sentence/1.wav")
     a = random.randint(1, 5)
-    
+    d.play("sentence/01.wav")
+    time.sleep(1)
     if a == 1:
       d.pattern21()
     elif a == 2:
