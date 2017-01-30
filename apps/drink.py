@@ -16,7 +16,7 @@ def face_direction(face):
 
 def searching_masaki(faces):
     keys = faces.keys()
-    keys = filter(lambda k: faces[k]['name'] == 'masaki', keys)
+    keys = filter(lambda k: faces[k]['name'] == '', keys)
     if len(keys) == 0:
         client.right(30)
     else:
@@ -26,15 +26,17 @@ def searching_masaki(faces):
 def facing_masaki(faces):
     keys = faces.keys()
     if len(keys) == 0:
+        client.get_face_positions(camera_listener)
         return
-    keys = filter(lambda k: faces[k]['name'] == 'masaki', keys)
+    keys = filter(lambda k: faces[k]['name'] == '', keys)
     if len(keys) == 0:
+        client.get_face_positions(camera_listener)
         return
     masakiFace = faces[keys[0]]
     if math.fabs(masakiFace['x']) < 0.1:
         client.speak('"Hi, masaki."')
         time.sleep(1)
-        client.speak('"put coke on me"')
+        client.speak('"give me coke"')
         status['name'] = 'waiting'
     else:
         face_direction(masakiFace)
@@ -69,7 +71,7 @@ def facing_haruki(faces):
         client.get_face_positions(camera_listener)
 
 def waiting(word):
-    if word == 'ok':
+    if word == 'put':
         status['name'] = 'searching-haruki'
         client.get_face_positions(camera_listener)
 
