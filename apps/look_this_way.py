@@ -49,17 +49,17 @@ def explain():
     client.speak('"OK?"')
     time.sleep(0.5)
     status['name'] = 'waiting-explain-response'
-
-def waiting_explain_response(word):
-    """wait response."""
-    if word == 'ok' or word == 'yes':
-        client.speak('"game start"')
-        time.sleep(1)
-        status['name'] = 'game-start'
-        game_start()
-    elif word == 'no':
-        status['name'] = 'explain'
-        explain()
+    while True:
+        word = status['word']
+        if word == 'ok' or word == 'yes':
+            client.speak('"game start"')
+            time.sleep(1)
+            status['name'] = 'game-start'
+            game_start()
+        elif word == 'no':
+            status['name'] = 'explain'
+            explain()
+        status['word'] = ''
 
 def game_start():
     client.speak('"Look"')
@@ -68,13 +68,13 @@ def game_start():
     time.sleep(1)
     client.speak('"Way!"')
     time.sleep(0.2)
-    get_direction(status['word'])
     status['name'] = 'change-direction'
     change_direction()
 
-def get_direction(word):
-    """get direction from player."""
+def change_direction():
+    """turn random."""
     status['ready'] = True
+    word = status['word']
     if word == 'left':
         player['direction'] = 'left'
     elif word == 'right':
@@ -85,9 +85,6 @@ def get_direction(word):
         player['direction'] = 'back'
     else:
         status['ready'] = False
-
-def change_direction():
-    """turn random."""
     if status['ready'] == False:
         client.speak('"Please say direction, Again"')
         time.sleep(3)
@@ -111,7 +108,7 @@ def change_direction():
         client.left(maid['angle'])
         time.sleep(3)
         client.right(maid['angle'])
-        judge-game()
+        judge_game()
         
 def judge_game():
     maid['count'] += 1
@@ -136,8 +133,6 @@ def camera_listener(request):
         getting_face(faces)
 
 def voice_listener(word):
-    if status['name'] == 'waiting-explain-response':
-        waiting_explain_response(word)
     #elif status['name'] == 'get-direction':
     #    get_direction(word)
     status['word'] = word
