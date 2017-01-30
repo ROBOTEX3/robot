@@ -10,7 +10,8 @@ import threading
 import random
 
 status = {
-    'name': 'getting_face',
+    'name': 'getting-face',
+    'word': ' '
     'ready': False
 }
 player = {
@@ -27,7 +28,7 @@ def getting_face(faces):
     """start app and recognize player."""
     keys = faces.keys()
     if len(keys) != 0:
-        player['name'] = faces[0]['name']
+        player['name'] = faces[keys][0]['name']
         client.speak('"Hi"')
         time.sleep(0.5)
         client.speak(player['name'])
@@ -35,8 +36,7 @@ def getting_face(faces):
         status['name'] = 'explain'
         explain()
     else:
-        explain()
-        client.get_face_positions(camera_listner)
+        client.get_face_positions(camera_listener)
 
 def explain():
     """explain rules of the game."""
@@ -55,13 +55,11 @@ def waiting_explain_response(word):
     if word == 'ok' or word == 'yes':
         client.speak('"game start"')
         time.sleep(1)
-        status['name'] = 'get-direction'
-        client.get_voice(voice_listener)
+        status['name'] = 'game-start'
         game_start()
     elif word == 'no':
         status['name'] = 'explain'
         explain()
-        client.get_voice(voice_listener)
 
 def game_start():
     client.speak('"Look"')
@@ -70,33 +68,30 @@ def game_start():
     time.sleep(1)
     client.speak('"Way!"')
     time.sleep(0.2)
+    get_direction(status['word'])
     status['name'] = 'change-direction'
     change_direction()
 
 def get_direction(word):
     """get direction from player."""
+    status['ready'] = True
     if word == 'left':
         player['direction'] = 'left'
-        status['ready'] = True
     elif word == 'right':
         player['direction'] = 'right'
-        status['ready'] = True
     elif word == 'front':
         player['direction'] = 'front'
-        status['ready'] = True
     elif word == 'back':
         player['direction'] = 'back'
-        status['ready'] = True
     else:
-        client.get_voice(voice_listener)
+        status['ready'] = False
 
 def change_direction():
     """turn random."""
     if status['ready'] == False:
         client.speak('"Please say direction, Again"')
         time.sleep(3)
-        status['name'] = 'get-direction'
-        client.get_voice(voice_listener)
+        status['name'] = 'game-start'
         game_start()
     else:
         status['ready'] = False
@@ -124,31 +119,29 @@ def judge_game():
         client.speak('"You Win"')
         time.sleep(2)
         status['name'] = 'game-end'
-        client.get_voice(voice_listener)
     elif maid['count'] >= 3:
         client.speak('"You lose"')
         time.sleep(2)
         status['name'] = 'game-end'
-        client.get_voice(voice_listener)
     else:
         client.speak('"Once more chance"')
         time.sleep(2)
-        status['name'] = 'get-direction'
-        client.get_voice(voice_listener)
+        status['name'] = 'game-start'
         game_start()
+
 
 def camera_listener(request):
     faces = request['faces']
     if status['name'] == 'getting-face':
-        getting-face(faces)
+        getting_face(faces)
 
 def voice_listener(word):
     if status['name'] == 'waiting-explain-response':
         waiting_explain_response(word)
-    elif status['name'] == 'get-direction':
-        get_direction(word)
-    elif status['name'] == 'game-end':
-        client.get_voice(voice_listener)
+    #elif status['name'] == 'get-direction':
+    #    get_direction(word)
+    status['word'] = word
+    client.get_voice(voice_listener)
     
 
 class MainThread(threading.Thread):
