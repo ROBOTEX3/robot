@@ -4,7 +4,6 @@ import json
 import os
 import requests
 
-capture = cv2.VideoCapture(0)
 
 personIds = {
     'a27c354a-2c0e-4b38-be6c-b64a2daf6b9e': 'haruki',
@@ -26,7 +25,9 @@ identify_url = 'https://westus.api.cognitive.microsoft.com/face/v1.0/identify'
 while True:
     command = raw_input()
     if command == 'face_positions':
+        capture = cv2.VideoCapture(0)
         _, img = capture.read()
+        capture.release()
         img = cv2.resize(img, (320, 240))
         cv2.imwrite('tmp.jpg', img)
         f = open('tmp.jpg', 'rb')
