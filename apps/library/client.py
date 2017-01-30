@@ -1,4 +1,5 @@
 import json
+import threading
 
 listeners = {
     'camera': [],
@@ -6,6 +7,14 @@ listeners = {
     'voice': [],
     'shoe': []
 }
+
+class CallbackThread(threading.Thread):
+    def __init__(self, callback, response):
+        super(CallbackThread, self).__init__()
+        self.callback = callback
+        self.response = response
+    def run(self):
+        self.callback(self.response)
 
 def startListener(thread):
     thread.start()
@@ -15,7 +24,8 @@ def startListener(thread):
         response = data['response']
         module = request['module']
         if len(listeners[module]) > 0:
-            listeners[module][0](response)
+            thread = CallbackThread(listeners[module][0], response)
+            thread.start()
             listeners[module].pop(0)
 
 def get_face_positions(callback):
