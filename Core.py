@@ -19,7 +19,7 @@ url = 'http://localhost:3000'
 proc = {}
 
 proc['app'] = subprocess.Popen(
-    ['python', '-u', './apps/sample_app.py'],
+    ['python', '-u', './apps/drink.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -45,10 +45,10 @@ def exitCore():
 
 if not is_test:
     proc['julius'] = subprocess.Popen(
-        ['~/dvd/julius/julius-4.2.3/julius/julius', '-C', 'voice/rapiro.jconf', '-module'],
-        stdout = nullFile,
-        stderr = nullFile
+        ['../dvd/julius/julius-4.2.3/julius/julius', '-C', 'voice/rapiro.jconf', '-module'],
+        stdout=nullFile
     )
+time.sleep(3)
 
 if is_test:
     camera_cmd = ['python', '-u', './camera/camera_stub.py', url]
@@ -156,6 +156,10 @@ def func_motor(request):
         angle = request['angle']
         log.communication('motor: send ' + cmd + ' ' + str(angle))
         proc['motor_acc'].stdin.write(cmd + ' ' + str(angle) + '\n')
+    elif cmd == 'move_acc':
+        dst = request['dst']
+        log.communication('motor: send ' + cmd + ' ' + str(dst))
+        proc['motor_acc'].stdin.write('move ' + str(dst) + ' ' + str(dst) + '\n')
 
 def func_sensor(request):
     threads['sensor'] = distant_thread.DistantThread(request, log, proc['app'], proc['sensor'])

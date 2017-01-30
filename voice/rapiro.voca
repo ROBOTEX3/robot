@@ -34,10 +34,6 @@ back	u sh i r o n i
 back	u sh i r o
 back	u sh i r o e
 back	b a q k u
-right	m i g i n i
-right	m i g i
-left	h i d a r i n i
-left	h i d a r i
 
 %HUKUSI
 もう	m o u
@@ -120,6 +116,11 @@ talk		h a n a s o:
 talk		h a n a s o u
 talk		h a n a s i s i y o:
 talk        h a n a s i s i y o u
+right	m i g i n i
+right	m i g i
+left	h i d a r i n i
+put     o i t a y o
+left	h i d a r i
 
 %REPLY
 true        i i y o:
@@ -136,7 +137,7 @@ false       m u r i
 false       y a d a y o
 
 %YESNO
-Yes         h a: i
-Yes         h a i
-No          i: e
-No          i i e
+yes         h a: i
+yes         h a i
+no          i: e
+no          i i e

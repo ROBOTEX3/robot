@@ -24,10 +24,10 @@
 4	[back]	u sh i r o
 4	[back]	u sh i r o e
 4	[back]	b a q k u
-4	[right]	m i g i n i
-4	[right]	m i g i
-4	[left]	h i d a r i n i
-4	[left]	h i d a r i
+10	[right]	m i g i n i
+10	[right]	m i g i
+10	[left]	h i d a r i n i
+10	[left]	h i d a r i
 5	[もう]	m o u
 5	[もう]	m o:
 6	[一]	i ch i
@@ -90,6 +90,7 @@
 10	[talk]		h a n a s i s i y o:
 10	[talk]		h a n a s i s i y o u
 10	[cancel]    ch u: d a N
+10  [put]       o i t a y o
 12	[otya]		o ch a
 13  [true]      i i y o:
 13  [true]      i i y o
@@ -103,7 +104,7 @@
 13  [false]     y a d a n e
 13  [false]     m u r i
 13  [false]     y a d a y o
-14  [Yes]       h a: i
-14  [Yes]       h a i
-14  [No]        i: e
-14  [No]        i i e
+14  [yes]       h a: i
+14  [yes]       h a i
+14  [no]        i: e
+14  [no]        i i e

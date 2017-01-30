@@ -34,6 +34,8 @@ def facing_masaki(faces):
         return
     masakiFace = faces[keys[0]]
     if math.fabs(masakiFace['x']) < 0.1:
+        client.move_acc(int(masakiFace['distance']))
+        time.sleep(2)
         client.speak('"Hi, masaki."')
         time.sleep(1)
         client.speak('"give me coke"')
@@ -62,6 +64,8 @@ def facing_haruki(faces):
         return
     masakiFace = faces[keys[0]]
     if math.fabs(masakiFace['x']) < 0.1:
+        client.move_acc(int(masakiFace['distance']))
+        time.sleep(2)
         client.speak('"Hi, haruki."')
         time.sleep(1)
         client.speak('"I have coke for you"')

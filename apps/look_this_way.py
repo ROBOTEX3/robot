@@ -51,7 +51,7 @@ def explain():
     status['name'] = 'waiting-explain-response'
     while True:
         word = status['word']
-        if word == 'ok' or word == 'yes':
+        if word == 'yes':
             client.speak('"game start"')
             time.sleep(1)
             status['name'] = 'game-start'
@@ -81,10 +81,11 @@ def change_direction():
         player['direction'] = 'right'
     elif word == 'front':
         player['direction'] = 'front'
-    elif word == 'back':
-        player['direction'] = 'back'
+    #elif word == 'back':
+    #    player['direction'] = 'back'
     else:
         status['ready'] = False
+
     if status['ready'] == False:
         client.speak('"Please say direction, Again"')
         time.sleep(3)
@@ -92,22 +93,23 @@ def change_direction():
         game_start()
     else:
         status['ready'] = False
-        i = random.randint(1, 4)
+        i = random.randint(1, 3)
         if i == 1:
             maid['direction'] = 'left'
-            maid['angle'] = -90
+            maid['angle'] = -60
         elif i == 2:
             maid['direction'] = 'right'
-            maid['angle'] = 90
+            maid['angle'] = 60
         elif i == 3:
             maid['direction'] = 'front'
             maid['angle'] = 0
-        elif i == 4:
-            maid['direction'] = 'back'
-            maid['angle'] = 180
+        #elif i == 4:
+        #    maid['direction'] = 'back'
+        #    maid['angle'] = 180
         client.left(maid['angle'])
         time.sleep(3)
         client.right(maid['angle'])
+        # adjust_face_position()
         judge_game()
         
 def judge_game():
@@ -135,7 +137,10 @@ def camera_listener(request):
 def voice_listener(word):
     #elif status['name'] == 'get-direction':
     #    get_direction(word)
-    status['word'] = word
+
+    # noise canceling
+    if word in ('left', 'right', 'front', 'yes', 'no', 'exit'):
+        status['word'] = word
     client.get_voice(voice_listener)
 
 class MainThread(threading.Thread):

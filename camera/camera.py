@@ -3,6 +3,7 @@ import cv2.cv as cv
 import json
 import os
 import requests
+import numpy as np
 
 
 personIds = {
@@ -28,7 +29,11 @@ while True:
         capture = cv2.VideoCapture(0)
         _, img = capture.read()
         capture.release()
-        img = cv2.resize(img, (320, 240))
+        img = cv2.resize(img, (640, 480))
+        lookUpTable = np.zeros((256, 1), dtype = 'uint8')
+        for i in range(256):
+            lookUpTable[i][0] = 255 * pow(float(i) / 255, 1.0 / 1.8)
+        img = cv2.LUT(img, lookUpTable)
         cv2.imwrite('tmp.jpg', img)
         f = open('tmp.jpg', 'rb')
         binary = f.read()
@@ -44,8 +49,10 @@ while True:
             faceIds.append(face['faceId'])
             pos = face['faceRectangle']
             data = {
-                'x': (pos['left'] + (pos['width'] / 2) - 160) / 160.0,
-                'y': (pos['top'] + (pos['height'] / 2) - 120) / 120.0,
+                'x': (pos['left'] + (pos['width'] / 2) - 320) / 330.0,
+                'y': (pos['top'] + (pos['height'] / 2) - 240) / 240.0,
+                'distance': (160 - pos['height']) / 160.0 * 60,
+                'height': pos['height'],
                 'name': ''
             }
             response['faces'][face['faceId']] = data

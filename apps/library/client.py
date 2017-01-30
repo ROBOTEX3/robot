@@ -77,6 +77,14 @@ def left(angle):
     }
     print json.dumps(request)
 
+def move_acc(dst):
+    request = {
+        'module': 'motor',
+        'command': 'move_acc',
+        'dst': dst
+    }
+    print json.dumps(request)
+
 def recongize_voice():
     request = {
         'module': 'voice',
