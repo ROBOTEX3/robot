@@ -49,16 +49,17 @@ def explain():
     client.speak('"OK?"')
     time.sleep(0.5)
     status['name'] = 'waiting-explain-response'
-    while True:
-        if status['word'] == 'yes':
-            client.speak('"game start"')
-            time.sleep(1)
-            status['name'] = 'get-direction'
-            game_start()
-        elif word == 'no':
-            status['name'] = 'explain'
-            explain()
-        status['word'] = ''
+
+def waiting_explain_response(word):
+    """wait response."""
+    if word == 'ok' or word == 'yes':
+        client.speak('"game start"')
+        time.sleep(1)
+        status['name'] = 'game-start'
+        game_start()
+    elif word == 'no':
+        status['name'] = 'explain'
+        explain()
 
 def game_start():
     client.speak('"Look"')
@@ -67,30 +68,30 @@ def game_start():
     time.sleep(1)
     client.speak('"Way!"')
     time.sleep(0.2)
+    get_direction(status['word'])
     status['name'] = 'change-direction'
     change_direction()
 
 def get_direction(word):
     """get direction from player."""
+    status['ready'] = True
     if word == 'left':
         player['direction'] = 'left'
-        status['ready'] = True
     elif word == 'right':
         player['direction'] = 'right'
-        status['ready'] = True
     elif word == 'front':
         player['direction'] = 'front'
-        status['ready'] = True
     elif word == 'back':
         player['direction'] = 'back'
-        status['ready'] = True
+    else:
+        status['ready'] = False
 
 def change_direction():
     """turn random."""
     if status['ready'] == False:
         client.speak('"Please say direction, Again"')
         time.sleep(3)
-        status['name'] = 'get-direction'
+        status['name'] = 'game-start'
         game_start()
     else:
         status['ready'] = False
@@ -125,8 +126,9 @@ def judge_game():
     else:
         client.speak('"Once more chance"')
         time.sleep(2)
-        status['name'] = 'get-direction'
+        status['name'] = 'game-start'
         game_start()
+
 
 def camera_listener(request):
     faces = request['faces']
@@ -134,9 +136,12 @@ def camera_listener(request):
         getting_face(faces)
 
 def voice_listener(word):
+    if status['name'] == 'waiting-explain-response':
+        waiting_explain_response(word)
+    #elif status['name'] == 'get-direction':
+    #    get_direction(word)
     status['word'] = word
     client.get_voice(voice_listener)
-
 
 class MainThread(threading.Thread):
     def __init__(self):
