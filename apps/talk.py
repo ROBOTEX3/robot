@@ -6,9 +6,14 @@ import sample_chat_short
 import sample_chat_long
 
 def main():
-     a = random.randint(1, 2)
+     d = sample_chat_short.play()
+     a = random.randint(1, 3)
      if a == 1:
        sample_chat_long.main()
+     elif a == 2:
+       d.play("sentence/1100.wav")
+       d.play("sentence/1101.wav")
+       d.play("sentence/806.wav")
      else:
        sample_chat_short.main()
 
