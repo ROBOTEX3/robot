@@ -47,7 +47,7 @@ def explain():
     client.speak('"If you failed three times, you lose."')
     time.sleep(4)
     client.speak('"OK?"')
-    starus['word'] = ''
+    status['word'] = ''
     time.sleep(0.5)
     status['name'] = 'waiting-explain-response'
     while True:
@@ -167,4 +167,4 @@ client.startListener(thread)
 
 
 
- 
+
