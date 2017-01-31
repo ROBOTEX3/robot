@@ -19,7 +19,7 @@ url = 'http://localhost:3000'
 proc = {}
 
 proc['app'] = subprocess.Popen(
-    ['python', '-u', './apps/drink.py'],
+    ['python', '-u', './apps/app1.py'],
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -73,18 +73,9 @@ proc['voice'] = subprocess.Popen(
 if is_test:
     motor_cmd = ['python', '-u', './motor/motor_stub.py', url]
 else:
-    motor_cmd = ['./motor/motor']
+    motor_cmd = ['./motor/motor_v3']
 proc['motor'] = subprocess.Popen(
     motor_cmd,
-    stdin = subprocess.PIPE,
-    stdout = subprocess.PIPE
-)
-if is_test:
-    motor_acc_cmd = ['python', '-u', './motor/motor_stub.py', url]
-else:
-    motor_acc_cmd = ['./motor/motor_accurate']
-proc['motor_acc'] = subprocess.Popen(
-    motor_acc_cmd,
     stdin = subprocess.PIPE,
     stdout = subprocess.PIPE
 )
@@ -146,20 +137,20 @@ def func_motor(request):
         log.communication('motor: send ' + cmd)
         proc['motor'].stdin.write(cmd + '\n')
     elif cmd == 'move' or cmd == 'back':
-        right_speed = request['right_speed']
-        left_speed = request['left_speed']
+        right_speed = request['left_speed']
+        left_speed = request['right_speed']
         right = str(right_speed)
         left = str(left_speed)
         log.communication('motor: send ' + cmd + ' ' + right + ' ' + left)
-        proc['motor'].stdin.write(cmd + ' ' + right + ' ' + left + '\n')
+        proc['motor'].stdin.write('move_spd ' + right + ' ' + left + '\n')
     elif cmd == 'right' or cmd == 'left':
         angle = request['angle']
         log.communication('motor: send ' + cmd + ' ' + str(angle))
-        proc['motor_acc'].stdin.write(cmd + ' ' + str(angle) + '\n')
+        proc['motor'].stdin.write(cmd + ' ' + str(angle) + '\n')
     elif cmd == 'move_acc':
         dst = request['dst']
         log.communication('motor: send ' + cmd + ' ' + str(dst))
-        proc['motor_acc'].stdin.write('move ' + str(dst) + ' ' + str(dst) + '\n')
+        proc['motor'].stdin.write('move ' + str(dst) + ' ' + str(dst) + '\n')
 
 def func_sensor(request):
     threads['sensor'] = distant_thread.DistantThread(request, log, proc['app'], proc['sensor'])

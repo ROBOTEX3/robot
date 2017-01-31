@@ -6,7 +6,9 @@ apps = [
     'app2',
     'drink',
     'dance',
-    'look_this_way'
+    'look_this_way',
+    'chin',
+    'follow'
 ]
 
 automaton = [
