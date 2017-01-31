@@ -2,7 +2,7 @@
 # look this way (atti muite hoi)
 #
 # 2017/01/28 Saito Yuma
-#
+# 2017/01/31 finish game_start()
 
 from library import client
 import time
@@ -43,9 +43,9 @@ def explain():
     client.speak('"Lets play Look This Way!"')
     time.sleep(3)
     client.speak('"If I turn the direction you said, you win."')
-    time.sleep(5)
+    time.sleep(4)
     client.speak('"If you failed three times, you lose."')
-    time.sleep(5)
+    time.sleep(4)
     client.speak('"OK?"')
     time.sleep(0.5)
     status['name'] = 'waiting-explain-response'
@@ -96,10 +96,10 @@ def change_direction():
         i = random.randint(1, 3)
         if i == 1:
             maid['direction'] = 'left'
-            maid['angle'] = -60
+            maid['angle'] = -45
         elif i == 2:
             maid['direction'] = 'right'
-            maid['angle'] = 60
+            maid['angle'] = 45
         elif i == 3:
             maid['direction'] = 'front'
             maid['angle'] = 0
@@ -107,8 +107,15 @@ def change_direction():
         #    maid['direction'] = 'back'
         #    maid['angle'] = 180
         client.left(maid['angle'])
-        time.sleep(3)
-        client.right(maid['angle'])
+        if maid['direction'] == front:
+            time.sleep(1)
+        else:
+            time.sleep(4)
+        client.right(maid['angle']
+        if maid['direction'] == front:
+            time.sleep(1)
+        else:
+            time.sleep(4)
         # adjust_face_position()
         judge_game()
         
@@ -116,15 +123,15 @@ def judge_game():
     maid['count'] += 1
     if player['direction'] == maid['direction']:
         client.speak('"You Win"')
-        time.sleep(2)
+        time.sleep(3)
         status['name'] = 'game-end'
     elif maid['count'] >= 3:
         client.speak('"You lose"')
-        time.sleep(2)
+        time.sleep(3)
         status['name'] = 'game-end'
     else:
         client.speak('"Once more chance"')
-        time.sleep(2)
+        time.sleep(3)
         status['name'] = 'game-start'
         game_start()
 
