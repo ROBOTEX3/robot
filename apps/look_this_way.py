@@ -47,6 +47,7 @@ def explain():
     client.speak('"If you failed three times, you lose."')
     time.sleep(4)
     client.speak('"OK?"')
+    starus['word'] = ''
     time.sleep(0.5)
     status['name'] = 'waiting-explain-response'
     while True:
@@ -55,6 +56,7 @@ def explain():
             client.speak('"game start"')
             time.sleep(1)
             status['name'] = 'game-start'
+            status['word'] = ''
             game_start()
         elif word == 'no':
             status['name'] = 'explain'
@@ -90,6 +92,7 @@ def change_direction():
         client.speak('"Please say direction, Again"')
         time.sleep(3)
         status['name'] = 'game-start'
+        status['word'] = ''
         game_start()
     else:
         status['ready'] = False
@@ -107,15 +110,15 @@ def change_direction():
         #    maid['direction'] = 'back'
         #    maid['angle'] = 180
         client.left(maid['angle'])
-        if maid['direction'] == front:
+        if maid['direction'] == 'front':
             time.sleep(1)
         else:
-            time.sleep(4)
-        client.right(maid['angle']
-        if maid['direction'] == front:
+            time.sleep(3)
+        client.right(maid['angle'])
+        if maid['direction'] == 'front':
             time.sleep(1)
         else:
-            time.sleep(4)
+            time.sleep(3)
         # adjust_face_position()
         judge_game()
         
@@ -133,6 +136,7 @@ def judge_game():
         client.speak('"Once more chance"')
         time.sleep(3)
         status['name'] = 'game-start'
+        status['word'] = ''
         game_start()
 
 
