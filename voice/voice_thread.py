@@ -3,7 +3,10 @@ import json
 
 apps = [
     'app1',
-    'app2'
+    'app2',
+    'drink',
+    'dance',
+    'look_this_way'
 ]
 
 automaton = [

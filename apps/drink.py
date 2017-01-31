@@ -16,7 +16,7 @@ def face_direction(face):
 
 def searching_masaki(faces):
     keys = faces.keys()
-    keys = filter(lambda k: faces[k]['name'] == '', keys)
+    keys = filter(lambda k: faces[k]['name'] == 'masaki', keys)
     if len(keys) == 0:
         client.right(30)
     else:
@@ -28,7 +28,7 @@ def facing_masaki(faces):
     if len(keys) == 0:
         client.get_face_positions(camera_listener)
         return
-    keys = filter(lambda k: faces[k]['name'] == '', keys)
+    keys = filter(lambda k: faces[k]['name'] == 'masaki', keys)
     if len(keys) == 0:
         client.get_face_positions(camera_listener)
         return
