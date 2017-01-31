@@ -2,16 +2,16 @@ from library import client
 import time
 import threading
 
-
-
 def shoe_listener(request):
     x = request['x']
     y = request['y']
     state = request['state']
     if state == 'left-check':
         client.speak('left')
+        client.left(20)
     elif state == 'right-check':
         client.speak('right')
+        client.right(20)
     client.get_shoe(shoe_listener)
 
 class MainThread(threading.Thread):

@@ -13,8 +13,12 @@ def camera_listener(request):
         x = face['x']
         if x > 0:
             client.right(int(30 * x))
+            time.sleep(2)
+            client.move_acc(int(face['distance']))
         else:
             client.left(int(-30 * x))
+            time.sleep(2)
+            client.move_acc(int(face['distance']))
     client.get_face_positions(camera_listener)
 
 class MainThread(threading.Thread):

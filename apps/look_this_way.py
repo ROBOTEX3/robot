@@ -164,7 +164,3 @@ class MainThread(threading.Thread):
 random.seed()
 thread = MainThread()
 client.startListener(thread)
-
-
-
- 
